@@ -8,9 +8,9 @@ clear;
 addpath('cyclone2/');
 % addpath('~/MATLAB/paparazzi_log_parsing/matlab/tailsitter_plotters/');
 
-p = parselog('~/LOGS/cyclone2v1_pprz/20241030_valken_ewoud/144/24_10_30__16_27_37_SD.data'); log_nbr = '144';
+% p = parselog('~/LOGS/cyclone2v1_pprz/20241030_valken_ewoud/144/24_10_30__16_27_37_SD.data'); log_nbr = '144';
 % p = parselog('~/LOGS/20241030_valken_ewoud/145/24_10_30__16_45_37_SD.data'); log_nbr = '145';
-% p = parselog('~/LOGS/20241030_valken_ewoud/148/24_10_30__17_27_57_SD.data'); log_nbr = '148';
+% p = parselog('~/LOGS/cyclone2v1_pprz/20241030_valken_ewoud/148/24_10_30__17_27_57_SD.data'); log_nbr = '148';
 
 % p = parselog('~/LOGS/20241211_valken_vaggelis/161/24_12_11__15_21_45_SD.data'); log_nbr = '161';
 
@@ -22,7 +22,7 @@ p = parselog('~/LOGS/cyclone2v1_pprz/20241030_valken_ewoud/144/24_10_30__16_27_3
 % p = parselog('~/LOGS/20250116_cyberzoo_training/0253/25_01_16__17_55_45_SD.data'); log_nbr = '0253';
 
 % p = parselog('~/LOGS/20250117_valken_first_succ_manual/0254/25_01_17__14_22_01_SD.data'); log_nbr = '0254';
-% p = parselog('~/LOGS/20250117_valken_first_succ_manual/0257/25_01_17__15_36_58_SD.data'); log_nbr = '0257';
+p = parselog('~/LOGS/cyclone2v1_pprz/20250117_valken_first_succ_manual/0257/25_01_17__15_36_58_SD.data'); log_nbr = '0257';
 
 % p = parselog('~/LOGS/20250122_mavlab_elrs/0299/25_01_22__13_55_07_SD.data'); log_nbr = '0299';
 
@@ -107,8 +107,7 @@ figure('Name', 'Energy');
 plot_energy(ac_data);
 
 %% VISUALIZE FLIGHT
-% visualize_3d('Nederdrone5', ac_data, [160 200], 1, 'yaw_jump');
-visualize_3d('Cyclone2', ac_data, [316 330], 1, 'movie');
+vis(ac_data,20);
 
 %% load sim logs
 MATLABBASE = '~/MATLAB/';
