@@ -22,5 +22,5 @@ function vis(ac_data, fs_vis)
     actual.p = p;
     actual.q = q;
 
-    motion_vis(ref, actual, fs_vis);
+    traj_vis(ref, actual, fs_vis);
 end
