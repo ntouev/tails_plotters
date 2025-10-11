@@ -116,10 +116,10 @@ axWorld = uiaxes(leftGrid); axWorld.Layout.Row=1; axWorld.Layout.Column=1;
 hold(axWorld,'on'); grid(axWorld,'on'); view(axWorld,3);
 axWorld.ZDir = 'reverse';
 % Paths
-plot3(axWorld,pActual(:,1),pActual(:,2),pActual(:,3),':');  % actual path (dotted)
+plot3(axWorld,pActual(:,1),pActual(:,2),pActual(:,3),':', 'Color', [0.9 0.4 0]);  % actual path (dotted)
 if hasRef && ~isempty(pRef)
     % Pre-plot REF full trajectory
-    plot3(axWorld, pRef(:,1), pRef(:,2), pRef(:,3), '.', 'MarkerSize', 1, 'Color', [0.9 0.4 0]);
+    plot3(axWorld, pRef(:,1), pRef(:,2), pRef(:,3), '.', 'MarkerSize', 1, 'Color', [0 0.447 0.741]);
 end
 axis(axWorld,'equal'); daspect(axWorld,[1 1 1]);
 xlabel(axWorld,'N [m]'); ylabel(axWorld,'E [m]'); zlabel(axWorld,'D [m]');
@@ -177,7 +177,7 @@ hPt  = plot3(axWorld,pActual(IDX(1),1),pActual(IDX(1),2),pActual(IDX(1),3),...
 
 % Trailing dots for actual
 hTrail = plot3(axWorld, nan, nan, nan, 'o', ...
-    'MarkerSize',1, 'MarkerFaceColor','r', 'MarkerEdgeColor','k', 'LineStyle','none');
+    'MarkerSize',1, 'MarkerFaceColor','k', 'MarkerEdgeColor','k', 'LineStyle','none');
 
 % Optional REF marker
 if hasRef && ~isempty(pRef)
