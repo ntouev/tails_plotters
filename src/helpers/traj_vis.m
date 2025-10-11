@@ -137,8 +137,8 @@ title(axBody,'Attitude');
 % Top right
 axX = uiaxes(rightGrid); axX.Layout.Row=1; axX.Layout.Column=1;
 hold(axX,'on'); grid(axX,'on');
-plot(axX, t_vis, xRefDeg_vis, 'Color', [0.9 0.4 0], 'LineStyle',':');
-plot(axX, t_vis, xDeg_vis, 'Color', [0 0.447 0.741]);
+plot(axX, t_vis, xRefDeg_vis, 'LineStyle',':');
+plot(axX, t_vis, xDeg_vis);
 ylabel(axX,'\phi [deg]'); xlabel(axX,'Time [s]');
 xlim(axX,[t_vis(1) t_vis(end)]); title(axX,'Roll');
 set(axX.Children,'HitTest','off','PickableParts','none');
@@ -146,8 +146,8 @@ set(axX.Children,'HitTest','off','PickableParts','none');
 % Middle right
 axY = uiaxes(rightGrid); axY.Layout.Row=2; axY.Layout.Column=1;
 hold(axY,'on'); grid(axY,'on');
-plot(axY, t_vis, yRefDeg_vis, 'Color', [0.9 0.4 0], 'LineStyle',':');
-plot(axY, t_vis, yDeg_vis, 'Color', [0 0.447 0.741]);
+plot(axY, t_vis, yRefDeg_vis, 'LineStyle',':');
+plot(axY, t_vis, yDeg_vis);
 ylabel(axY,'\theta [deg]'); xlabel(axY,'Time [s]');
 xlim(axY,[t_vis(1) t_vis(end)]); title(axY,'Pitch');
 set(axY.Children,'HitTest','off','PickableParts','none');
@@ -155,8 +155,8 @@ set(axY.Children,'HitTest','off','PickableParts','none');
 % Bottom right
 axZ = uiaxes(rightGrid); axZ.Layout.Row=3; axZ.Layout.Column=1;
 hold(axZ,'on'); grid(axZ,'on');
-plot(axZ, t_vis, zRefDeg_vis, 'Color', [0.9 0.4 0], 'LineStyle',':');
-plot(axZ, t_vis, zDeg_vis, 'Color', [0 0.447 0.741]);
+plot(axZ, t_vis, zRefDeg_vis, 'LineStyle',':');
+plot(axZ, t_vis, zDeg_vis);
 ylabel(axZ,'\psi [deg]'); xlabel(axZ,'Time [s]');
 xlim(axZ,[t_vis(1) t_vis(end)]); title(axZ,'Yaw');
 set(axZ.Children,'HitTest','off','PickableParts','none');

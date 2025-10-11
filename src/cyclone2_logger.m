@@ -6,9 +6,9 @@ clear;
 homeDir = getenv('HOME');
 addpath(genpath(fullfile(homeDir,'tails_plotters/')));
 
-% p = parselog('~/LOGS/cyclone2v1_pprz/20241030_valken_ewoud/144/24_10_30__16_27_37_SD.data'); log_nbr = '144';
+p = parselog('~/LOGS/cyclone2v1_pprz/20241030_valken_ewoud/144/24_10_30__16_27_37_SD.data'); log_nbr = '144';
 % p = parselog('~/LOGS/20241030_valken_ewoud/145/24_10_30__16_45_37_SD.data'); log_nbr = '145';
-p = parselog('~/LOGS/cyclone2v1_pprz/20241030_valken_ewoud/148/24_10_30__17_27_57_SD.data'); log_nbr = '148';
+% p = parselog('~/LOGS/cyclone2v1_pprz/20241030_valken_ewoud/148/24_10_30__17_27_57_SD.data'); log_nbr = '148';
 
 % p = parselog('~/LOGS/20241211_valken_vaggelis/161/24_12_11__15_21_45_SD.data'); log_nbr = '161';
 
