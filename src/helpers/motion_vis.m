@@ -16,32 +16,43 @@ end
 tActual = actual.t;              % Nx1
 pActual = actual.p;              % Nx3, NED [N E D]
 qActual = actual.q;              % Nx4, [qs qx qy qz]
+qActual = qActual ./ vecnorm(qActual,2,2); % normalize the quaternion
 
-qActual = qActual ./ vecnorm(qActual,2,2);
 
-hasRef = ~isempty(ref) && isfield(ref,'p');
+hasRef = ~isempty(ref);
 if hasRef
-    pRef   = ref.p;             % Nx3, NED [N E D]
+    pRef = ref.p;
+    qRef = ref.q;
+    qRef = qRef ./ vecnorm(qRef,2,2);
 else
     pRef   = nan(0,3);
+    qRef   = nan(0,4);
 end
 
 N = numel(tActual);
 
 %% Rotations
 Rall = zeros(3,3,N);
+RallRef = zeros(3,3,N);
 for i = 1:N
     Rall(:,:,i) = quat2rotm(qActual(i,:));
+    RallRef(:,:,i) = quat2rotm(qRef(i,:));
 end
 
 % Get Eulers for display
 zxy = zeros(N,3);
+zxyRef = zeros(N,3);
 for i = 1:N
     zxy(i,:) = rotm2eul(Rall(:,:,i), 'ZXY');
+    zxyRef(i,:) = rotm2eul(RallRef(:,:,i), 'ZXY');
 end
 zDeg = zxy(:,1)*180/pi;
 xDeg = zxy(:,2)*180/pi;
 yDeg = zxy(:,3)*180/pi;
+
+zRefDeg = zxyRef(:,1)*180/pi;
+xRefDeg = zxyRef(:,2)*180/pi;
+yRefDeg = zxyRef(:,3)*180/pi;
 
 %% visualization timeline
 dt_vis = 1/fs_vis;
@@ -68,6 +79,10 @@ t_vis     = t_vis(ia);
 zDeg_vis = zDeg(IDX);
 yDeg_vis = yDeg(IDX);
 xDeg_vis = xDeg(IDX);
+
+zRefDeg_vis = zRefDeg(IDX);
+yRefDeg_vis = yRefDeg(IDX);
+xRefDeg_vis = xRefDeg(IDX);
 
 % ~ 2 sec trail
 Mtrail = max(1, round(2 / dt_vis));
@@ -103,8 +118,8 @@ axWorld.ZDir = 'reverse';
 % Paths
 plot3(axWorld,pActual(:,1),pActual(:,2),pActual(:,3),':');  % actual path (dotted)
 if hasRef && ~isempty(pRef)
-    % Pre-plot REF full trajectory as dotted green points (static)
-    plot3(axWorld, pRef(:,1), pRef(:,2), pRef(:,3), '.', 'MarkerSize', 1, 'Color', [0 0.6 0]);
+    % Pre-plot REF full trajectory
+    plot3(axWorld, pRef(:,1), pRef(:,2), pRef(:,3), '.', 'MarkerSize', 1, 'Color', [0.9 0.4 0]);
 end
 axis(axWorld,'equal'); daspect(axWorld,[1 1 1]);
 xlabel(axWorld,'N [m]'); ylabel(axWorld,'E [m]'); zlabel(axWorld,'D [m]');
@@ -115,14 +130,15 @@ axBody = uiaxes(leftGrid); axBody.Layout.Row=2; axBody.Layout.Column=1;
 hold(axBody,'on'); grid(axBody,'on'); view(axBody,3);
 axBody.ZDir = 'reverse';
 axis(axBody,[-0.9 0.9 -0.9 0.9 -0.3 0.3]); daspect(axBody,[1 1 1]);
-xlabel(axBody,'X_b'); ylabel(axBody,'Y_b'); zlabel(axBody,'Z_b');
+xlabel(axBody,'N'); ylabel(axBody,'E'); zlabel(axBody,'D');
 title(axBody,'Attitude');
 
 % RIGHT
 % Top right
 axX = uiaxes(rightGrid); axX.Layout.Row=1; axX.Layout.Column=1;
 hold(axX,'on'); grid(axX,'on');
-plot(axX, t_vis, xDeg_vis);
+plot(axX, t_vis, xRefDeg_vis, 'Color', [0.9 0.4 0], 'LineStyle',':');
+plot(axX, t_vis, xDeg_vis, 'Color', [0 0.447 0.741]);
 ylabel(axX,'\phi [deg]'); xlabel(axX,'Time [s]');
 xlim(axX,[t_vis(1) t_vis(end)]); title(axX,'Roll');
 set(axX.Children,'HitTest','off','PickableParts','none');
@@ -130,7 +146,8 @@ set(axX.Children,'HitTest','off','PickableParts','none');
 % Middle right
 axY = uiaxes(rightGrid); axY.Layout.Row=2; axY.Layout.Column=1;
 hold(axY,'on'); grid(axY,'on');
-plot(axY, t_vis, yDeg_vis);
+plot(axY, t_vis, yRefDeg_vis, 'Color', [0.9 0.4 0], 'LineStyle',':');
+plot(axY, t_vis, yDeg_vis, 'Color', [0 0.447 0.741]);
 ylabel(axY,'\theta [deg]'); xlabel(axY,'Time [s]');
 xlim(axY,[t_vis(1) t_vis(end)]); title(axY,'Pitch');
 set(axY.Children,'HitTest','off','PickableParts','none');
@@ -138,7 +155,8 @@ set(axY.Children,'HitTest','off','PickableParts','none');
 % Bottom right
 axZ = uiaxes(rightGrid); axZ.Layout.Row=3; axZ.Layout.Column=1;
 hold(axZ,'on'); grid(axZ,'on');
-plot(axZ, t_vis, zDeg_vis);
+plot(axZ, t_vis, zRefDeg_vis, 'Color', [0.9 0.4 0], 'LineStyle',':');
+plot(axZ, t_vis, zDeg_vis, 'Color', [0 0.447 0.741]);
 ylabel(axZ,'\psi [deg]'); xlabel(axZ,'Time [s]');
 xlim(axZ,[t_vis(1) t_vis(end)]); title(axZ,'Yaw');
 set(axZ.Children,'HitTest','off','PickableParts','none');
@@ -157,11 +175,11 @@ btnExport = uibutton(f,'push','Text','⬇ Export video','Position',[0 0 120 30],
 hPt  = plot3(axWorld,pActual(IDX(1),1),pActual(IDX(1),2),pActual(IDX(1),3),...
              'o','MarkerSize',6,'LineWidth',1,'Color',[0 0 0]);
 
-% Black trailing dots for actual
+% Trailing dots for actual
 hTrail = plot3(axWorld, nan, nan, nan, 'o', ...
     'MarkerSize',1, 'MarkerFaceColor','r', 'MarkerEdgeColor','k', 'LineStyle','none');
 
-% --- Optional REF marker (moving green dot; static dotted traj already plotted) ---
+% Optional REF marker
 if hasRef && ~isempty(pRef)
     i0_2  = min(IDX(1), size(pRef,1));
     hPt2  = plot3(axWorld, pRef(i0_2,1), pRef(i0_2,2), pRef(i0_2,3), ...

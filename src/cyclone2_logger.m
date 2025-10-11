@@ -3,14 +3,12 @@ clear; close all;
 %% load local flight data
 clear;
 
-% addpath('~/MATLAB/paparazzi_log_parsing/matlab/math');
-% addpath('~/MATLAB/paparazzi_log_parsing/matlab/tools');
-addpath('cyclone2/');
-% addpath('~/MATLAB/paparazzi_log_parsing/matlab/tailsitter_plotters/');
+% homeDir = getenv('HOME');
+% addpath(genpath(fullfile(homeDir,'tails_plotters/src/')));
 
 % p = parselog('~/LOGS/cyclone2v1_pprz/20241030_valken_ewoud/144/24_10_30__16_27_37_SD.data'); log_nbr = '144';
 % p = parselog('~/LOGS/20241030_valken_ewoud/145/24_10_30__16_45_37_SD.data'); log_nbr = '145';
-% p = parselog('~/LOGS/cyclone2v1_pprz/20241030_valken_ewoud/148/24_10_30__17_27_57_SD.data'); log_nbr = '148';
+p = parselog('~/LOGS/cyclone2v1_pprz/20241030_valken_ewoud/148/24_10_30__17_27_57_SD.data'); log_nbr = '148';
 
 % p = parselog('~/LOGS/20241211_valken_vaggelis/161/24_12_11__15_21_45_SD.data'); log_nbr = '161';
 
@@ -22,7 +20,7 @@ addpath('cyclone2/');
 % p = parselog('~/LOGS/20250116_cyberzoo_training/0253/25_01_16__17_55_45_SD.data'); log_nbr = '0253';
 
 % p = parselog('~/LOGS/20250117_valken_first_succ_manual/0254/25_01_17__14_22_01_SD.data'); log_nbr = '0254';
-p = parselog('~/LOGS/cyclone2v1_pprz/20250117_valken_first_succ_manual/0257/25_01_17__15_36_58_SD.data'); log_nbr = '0257';
+% p = parselog('~/LOGS/cyclone2v1_pprz/20250117_valken_first_succ_manual/0257/25_01_17__15_36_58_SD.data'); log_nbr = '0257';
 
 % p = parselog('~/LOGS/20250122_mavlab_elrs/0299/25_01_22__13_55_07_SD.data'); log_nbr = '0299';
 
@@ -40,7 +38,7 @@ p = parselog('~/LOGS/cyclone2v1_pprz/20250117_valken_first_succ_manual/0257/25_0
 % p = parselog('~/LOGS/20250305_cyberzoo_HOV_C/0415/25_03_12__09_03_08_SD.data'); log_nbr = '0415';
 % p = parselog('~/LOGS/20250305_cyberzoo_HOV_C/0416/25_03_12__09_09_42_SD.data'); log_nbr = '0416';
 
-% p = parselog('~/LOGS/20250307_valken_spiral/0418/22_05_01__01_59_46_SD.data'); log_nbr = '0418';
+% p = parselog('~/LOGS/cyclone2v1_pprz/20250307_valken_spiral/0418/22_05_01__01_59_46_SD.data'); log_nbr = '0418';
 % p = parselog('~/LOGS/20250307_valken_spiral/0420/25_03_07__16_26_20_SD.data'); log_nbr = '0420';
 
 % p = parselog('~/LOGS/20250319_delft_ekf/0426/25_03_19__16_52_56_SD.data'); log_nbr = '0426';
