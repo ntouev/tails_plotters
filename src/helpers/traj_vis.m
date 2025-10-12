@@ -1,4 +1,7 @@
-function motion_vis(varargin)
+function traj_vis(varargin)
+
+homeDir = getenv('HOME');
+addpath(genpath(fullfile(homeDir,'tails_plotters/')));
 
 %% Parse inputs
 if nargin==2
