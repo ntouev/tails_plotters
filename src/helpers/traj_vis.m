@@ -186,10 +186,10 @@ hTrail = plot3(axWorld, nan, nan, nan, 'o', ...
 if hasRef && ~isempty(pRef)
     i0_2  = min(IDX(1), size(pRef,1));
     hPt2  = plot3(axWorld, pRef(i0_2,1), pRef(i0_2,2), pRef(i0_2,3), ...
-                  'o', 'MarkerSize',5, 'MarkerFaceColor','k', 'MarkerEdgeColor','k', 'LineStyle','none');
+                  'o', 'MarkerSize',5, 'MarkerFaceColor','none', 'MarkerEdgeColor','b', 'LineStyle','none');
 else
     % placeholder to keep code simple
-    hPt2  = plot3(axWorld, nan, nan, nan, 'o', 'MarkerSize',5, 'MarkerFaceColor','g', 'MarkerEdgeColor','g');
+    hPt2  = plot3(axWorld, nan, nan, nan, 'o', 'MarkerSize',5, 'MarkerFaceColor','b', 'MarkerEdgeColor','b');
 end
 
 %% STL MODEL
@@ -208,7 +208,7 @@ rangeN = max(pActual(:,1)) - min(pActual(:,1));
 rangeE = max(pActual(:,2)) - min(pActual(:,2));
 rangeD = max(pActual(:,3)) - min(pActual(:,3));
 sceneSize = max([rangeN, rangeE, rangeD]); if sceneSize==0, sceneSize=1; end
-scale_world = max(0.1, min(0.24*sceneSize, 30.0));   % miniature
+scale_world = max(0.1, min(0.08*sceneSize, 30.0));   % miniature
 scale_body  = 0.9;                                   % large
 
 V_world = Vunit_rb * scale_world;
@@ -219,7 +219,12 @@ hT_world = hgtransform('Parent',axWorld);
 hT_body  = hgtransform('Parent',axBody);
 
 patch('Parent',hT_world,'Faces',F0,'Vertices',V_world, ...
-      'FaceColor',[0.35 0.65 0.95],'EdgeColor','k','FaceAlpha',0.95);
+      'FaceColor',[0.8500 0.3250 0.0980], ... % orange
+      'EdgeColor','none', ...
+      'FaceAlpha',1, ...
+      'FaceLighting','flat', ...         % avoids black shading on UIAxes
+      'AmbientStrength',0.8);
+
 patch('Parent',hT_body,'Faces',F0,'Vertices',V_body, ...
       'FaceColor',[0.35 0.65 0.95],'EdgeColor','none','FaceAlpha',1.0);
 
