@@ -19,6 +19,8 @@ end
 tActual = actual.t;              % Nx1
 pActual = actual.p;              % Nx3, NED [N E D]
 qActual = actual.q;              % Nx4, [qs qx qy qz]
+pdotActual = actual.pdot;
+vActual = sqrt(pdotActual(:,1).^2 + pdotActual(:,2).^2 + pdotActual(:,3).^2);
 qActual = qActual ./ vecnorm(qActual,2,2); % normalize the quaternion
 
 
@@ -166,6 +168,7 @@ set(axZ.Children,'HitTest','off','PickableParts','none');
 
 % Labels & controls (anchored near bottom-left of axBody)
 lblT = uilabel(f,'Text','t = 0.00 s','FontWeight','bold','Position',[0 0 220 22]);
+lblV = uilabel(f,'Text','v = 0.00 m/s','FontWeight','bold','Position',[0 0 220 22]);
 btn  = uibutton(f,'state','Text','▶ Play','Position',[0 0 90 30], ...
                 'ValueChangedFcn',@(b,~)togglePlay(b));
 
@@ -298,6 +301,7 @@ moveToK(1);
         btn.Position        = [p(1)+margin, p(2)+margin, 90, 30];
         btnExport.Position  = [btn.Position(1)+btn.Position(3)+gap, p(2)+margin, 120, 30];
         lblT.Position       = [btnExport.Position(1)+btnExport.Position(3)+gap, p(2)+margin+4, 220, 22];
+        lblV.Position       = [lblT.Position(1)+lblT.Position(3)+gap, p(2)+margin+4, 180, 22];
     end
 
     function onKey(ev)
@@ -393,6 +397,7 @@ moveToK(1);
         end
 
         lblT.Text = sprintf('t = %.3f s', curTime);
+        lblV.Text = sprintf('v = %.2f m/s', vActual(iFrame));
 
         % Sync cursors (visual time)
         cxY.Value = curTime; cxX.Value = curTime; cxZ.Value = curTime;
