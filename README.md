@@ -1,2 +1,3 @@
-`messages.m` and `parselog.m` are copied from https://github.com/tudelft/paparazzi_log_parsing/tree/master
-The initial version of `plotAircraftTrajectoryAndAttitudes.m` is developed by Ziqing.
+- The main visualization tool is `src/helpers/traj_vis.m` and the UI looks like ![UI screenshot](UI.png)
+- `messages.m` and `parselog.m` are copied from https://github.com/tudelft/paparazzi_log_parsing/tree/master
+- The initial version of `plotAircraftTrajectoryAndAttitudes.m` is developed by Ziqing.
