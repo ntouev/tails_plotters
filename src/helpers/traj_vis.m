@@ -120,6 +120,13 @@ rightGrid.ColumnWidth = {'1x'};
 axWorld = uiaxes(leftGrid); axWorld.Layout.Row=1; axWorld.Layout.Column=1;
 hold(axWorld,'on'); grid(axWorld,'on'); view(axWorld,3);
 axWorld.ZDir = 'reverse';
+% --- Overlay readouts on the right side of axWorld ---
+txtT = text(axWorld, 1.01, 0.98, 't = 0.000 s', ...
+    'Units','normalized', 'HorizontalAlignment','left', 'VerticalAlignment','top', ...
+    'FontWeight','bold', 'BackgroundColor','none', 'Margin',4, 'Clipping','off');
+txtV = text(axWorld, 1.01, 0.90, 'v = 0.00 m/s', ...
+    'Units','normalized', 'HorizontalAlignment','left', 'VerticalAlignment','top', ...
+    'FontWeight','bold', 'BackgroundColor','none', 'Margin',4, 'Clipping','off');
 % Paths
 plot3(axWorld,pActual(:,1),pActual(:,2),pActual(:,3),':', 'Color', [0.9 0.4 0]);  % actual path (dotted)
 if hasRef && ~isempty(pRef)
@@ -167,8 +174,6 @@ xlim(axZ,[t_vis(1) t_vis(end)]); title(axZ,'Yaw');
 set(axZ.Children,'HitTest','off','PickableParts','none');
 
 % Labels & controls (anchored near bottom-left of axBody)
-lblT = uilabel(f,'Text','t = 0.00 s','FontWeight','bold','Position',[0 0 220 22]);
-lblV = uilabel(f,'Text','v = 0.00 m/s','FontWeight','bold','Position',[0 0 220 22]);
 btn  = uibutton(f,'state','Text','▶ Play','Position',[0 0 90 30], ...
                 'ValueChangedFcn',@(b,~)togglePlay(b));
 
@@ -300,8 +305,6 @@ moveToK(1);
         margin = 10; gap = 8;
         btn.Position        = [p(1)+margin, p(2)+margin, 90, 30];
         btnExport.Position  = [btn.Position(1)+btn.Position(3)+gap, p(2)+margin, 120, 30];
-        lblT.Position       = [btnExport.Position(1)+btnExport.Position(3)+gap, p(2)+margin+4, 220, 22];
-        lblV.Position       = [lblT.Position(1)+lblT.Position(3)+gap, p(2)+margin+4, 180, 22];
     end
 
     function onKey(ev)
@@ -396,8 +399,8 @@ moveToK(1);
             set(hPt2,'XData',pRef(iFrame2,1),'YData',pRef(iFrame2,2),'ZData',pRef(iFrame2,3));
         end
 
-        lblT.Text = sprintf('t = %.3f s', curTime);
-        lblV.Text = sprintf('v = %.2f m/s', vActual(iFrame));
+        txtT.String = sprintf('t = %.3f s', curTime);
+        txtV.String = sprintf('v = %.2f m/s', vActual(iFrame));
 
         % Sync cursors (visual time)
         cxY.Value = curTime; cxX.Value = curTime; cxZ.Value = curTime;
