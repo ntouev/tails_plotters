@@ -120,6 +120,7 @@ rightGrid.ColumnWidth = {'1x'};
 axWorld = uiaxes(leftGrid); axWorld.Layout.Row=1; axWorld.Layout.Column=1;
 hold(axWorld,'on'); grid(axWorld,'on'); view(axWorld,3);
 axWorld.ZDir = 'reverse';
+axWorld.YDir = 'reverse';
 % --- Overlay readouts on the right side of axWorld ---
 txtT = text(axWorld, 1.01, 0.98, 't = 0.000 s', ...
     'Units','normalized', 'HorizontalAlignment','left', 'VerticalAlignment','top', ...
@@ -141,6 +142,7 @@ title(axWorld,'World view');
 axBody = uiaxes(leftGrid); axBody.Layout.Row=2; axBody.Layout.Column=1;
 hold(axBody,'on'); grid(axBody,'on'); view(axBody,3);
 axBody.ZDir = 'reverse';
+axBody.YDir = 'reverse';
 axis(axBody,[-0.9 0.9 -0.9 0.9 -0.3 0.3]); daspect(axBody,[1 1 1]);
 xlabel(axBody,'N'); ylabel(axBody,'E'); zlabel(axBody,'D');
 title(axBody,'Attitude');
@@ -250,15 +252,15 @@ catch, end
 
 % Body axes triad (no legend)
 plot3(axBody,[0 0.7],[0 0],[0 0],'LineWidth',2,'LineStyle',':');
-plot3(axBody,[0 0],[0 -0.7],[0 0],'LineWidth',2,'LineStyle',':');
+plot3(axBody,[0 0],[0 0.7],[0 0],'LineWidth',2,'LineStyle',':');
 plot3(axBody,[0 0],[0 0],[0 0.7],'LineWidth',2,'LineStyle',':');
 
 axisLen = 0.6;
-line('Parent',hT_body, 'XData',[0 0],      'YData',[0 0],      'ZData',[0 -axisLen],  ...  % +Z_b (down)
+line('Parent',hT_body, 'XData',[0 0],      'YData',[0 0],      'ZData',[0 -axisLen], ...
      'LineWidth',2, 'Color',[0 0.4470 0.7410]);  % blue
-line('Parent',hT_body, 'XData',[0 0],      'YData',[0 -axisLen],'ZData',[0 0],      ...  % +Y_b (right)
+line('Parent',hT_body, 'XData',[0 0],      'YData',[0 axisLen],'ZData',[0 0], ...
      'LineWidth',2, 'Color',[0.8500 0.3250 0.0980]);  % red
-line('Parent',hT_body, 'XData',[0 axisLen],'YData',[0 0],     'ZData',[0 0],      ...  % -X_b (backwards)
+line('Parent',hT_body, 'XData',[0 axisLen],'YData',[0 0],     'ZData',[0 0], ...
      'LineWidth',2, 'Color',[0.9290 0.6940 0.1250]);  % yellow
 
 % Time cursors
