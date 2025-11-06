@@ -21,8 +21,7 @@ end
 tActual = actual.t;              % Nx1
 pActual = actual.p;              % Nx3, NED [N E D]
 qActual = actual.q;              % Nx4, [qs qx qy qz]
-pdotActual = actual.pdot;
-vActual = sqrt(sum(pdotActual.^2,2));
+ASActual = actual.AS;
 qActual = qActual ./ vecnorm(qActual,2,2); % normalize quaternion
 
 hasRef = ~isempty(ref);
@@ -149,7 +148,7 @@ lblTime = uilabel(readGrid, 'Text','t = 0.000 s', 'FontSize',12, 'FontWeight','b
 lblTime.Layout.Row = 1; 
 lblTime.Layout.Column = 1;   % spans all columns
 
-lblVel  = uilabel(readGrid, 'Text','v = 0.00 m/s', 'FontSize',12, 'FontWeight','bold');
+lblVel  = uilabel(readGrid, 'Text','AS = 0.00 m/s', 'FontSize',12, 'FontWeight','bold');
 lblVel.Layout.Row = 2; 
 lblVel.Layout.Column = 1; 
 
@@ -356,7 +355,7 @@ moveToK(1);
 
         % Update readouts
         lblTime.Text = sprintf('t = %.3f s', curTime);
-        lblVel.Text  = sprintf('v = %.2f m/s', vActual(iFrame));
+        lblVel.Text  = sprintf('AS = %.2f m/s', ASActual(iFrame));
         lblPhi.Text = sprintf('ϕ = %.1f°', rad2deg(zxy(iFrame, 2)));
         lblTheta.Text = sprintf('θ = %.1f°', rad2deg(zxy(iFrame, 3)));
         lblPsi.Text = sprintf('ψ = %.1f°', rad2deg(zxy(iFrame, 1)));
