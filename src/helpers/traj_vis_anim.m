@@ -1,4 +1,4 @@
-function traj_vis_anim(varargin)
+function f = traj_vis_anim(varargin)
 
     homeDir = getenv('HOME');
     addpath(genpath(fullfile(homeDir,'tails_plotters/')));

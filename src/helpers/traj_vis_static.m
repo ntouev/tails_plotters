@@ -1,4 +1,4 @@
-function traj_vis_static(varargin)
+function f = traj_vis_static(varargin)
 
     if nargin == 3
         ref        = varargin{1};
@@ -8,7 +8,7 @@ function traj_vis_static(varargin)
         error('Usage: traj_vis_static(ref, actual, name)');
     end
 
-    figure('Name', title_name);
+    f = figure('Name', title_name);
     plot3(ref.p(:,1), ref.p(:,2), ref.p(:,3));
     hold on;
     plot3(actual.p(:,1), actual.p(:,2), actual.p(:,3));
